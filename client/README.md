@@ -1,4 +1,4 @@
-# migrahack
+# client
 
 ## Project setup
 ```
