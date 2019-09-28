@@ -6,7 +6,6 @@ exports.up = function(knex) {
         table.float('longitude').notNullable()
         table.string('locationName')
         table.boolean('isSighting').notNullable()
-        table.boolean('isVerified').defaultTo(false)
         table.timestamp('startTime').defaultTo(knex.fn.now()).notNullable()
         table.timestamp('endTime')
         table.integer('numberOfReports')

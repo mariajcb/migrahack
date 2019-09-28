@@ -4,7 +4,7 @@ exports.up = function(knex) {
         table.uuid('id').unique()
         table.float('latitude')
         table.float('longitude')
-        table.boolean('isVerified')
+        table.boolean('isVerified').defaultTo(false)
         table.timestamp('createdAt').defaultTo(knex.fn.now())
         table.timestamp('updatedAt').defaultTo(knex.fn.now())
     })

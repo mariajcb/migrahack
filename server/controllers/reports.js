@@ -4,28 +4,34 @@ const knex = require('../knex')
 const { convertMilesToMeters } = require('../util/geocoding')
 
 const createRaid = async (raid) => {
-
+    const { latitude, longitude } = raid
+    return knex('raids')
+        .returning('id')
+        .insert({
+        latitude,
+        longitude
+    })[0]
 }
 
 const recalculateRaidCenter = async (raidId) => {
     const reportLatsAndLongs = await
-        knex.select('lat as latitude', 'long as longitude')
+        knex.select('latitude', 'longitude')
             .from('reports')
             .where({ raidId })
     const { latitude, longitude } = geolib.getCenter(reportLatsAndLongs)
     await knex('raids')
         .where({ id: raidId })
         .update({
-            lat: latitude,
-            long: longitude,
+            latitude: latitude,
+            longitude: longitude,
             updatedAt: knex.fn.now()
         })
 }
 
 const getRaids = async (request) => {
     const {
-        lat,
-        long,
+        latitude,
+        longitude,
         startTime,
         radius,
     } = request
@@ -33,8 +39,8 @@ const getRaids = async (request) => {
 
 const newReport = async (request) => {
     const {
-        lat,
-        long,
+        latitude,
+        longitude,
         datetime,
         isSighting,
     } = request
@@ -44,8 +50,8 @@ const newReport = async (request) => {
 
     const oneMileInMeters = convertMilesToMeters(1)
     const { minLat, maxLat, minLng, maxLng } = geolib.getBoundsOfDistance({
-        latitude: lat,
-        longitude: long,
+        latitude,
+        longitude,
     }, oneMileInMeters)
 
     let raidId = ''
@@ -53,8 +59,8 @@ const newReport = async (request) => {
     const existingRaid = await
         knex('raids')
             .where('createdAt', '>=', oneDayBeforeCurrentReport)
-            .andWhereBetween('lat', [minLat, maxLat])
-            .andWhereBetween('long', [minLng, maxLng])
+            .andWhereBetween('latitude', [minLat, maxLat])
+            .andWhereBetween('longitude', [minLng, maxLng])
             .first()
 
     if (!existingRaid) {
@@ -65,8 +71,8 @@ const newReport = async (request) => {
     }
 
     await knex('reports').insert(Object.assign({
-        lat,
-        long,
+        latitude,
+        longitude,
         isSighting,
         raidId,
     }, datetime ? {
