@@ -32,6 +32,7 @@ app.post('/api/reports', async (req, res, next) => {
         res.status(500).send('Missing request body')
     }
     const raids = await getRaids(req.body)
+    res.send(raids)
 })
 
 // error handler

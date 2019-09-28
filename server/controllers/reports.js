@@ -33,9 +33,39 @@ const getRaids = async (request) => {
     const {
         latitude,
         longitude,
-        startTime,
-        radius,
+        daysBeforeToday,
+        radiusInMiles,
     } = request
+
+    const startTime =
+        moment(knex.fn.now()).subtract(daysBeforeToday, 'days').toISOString() ||
+        moment(knex.fn.now()).subtract(1, 'months').toISOString() // default to one month
+
+    const { minLat, maxLat, minLng, maxLng } = getBoundsOfDistance({
+        latitude,
+        longitude,
+    }, radiusInMiles || 5) // Default to 5 miles
+
+    const raids = await
+        knex('raids')
+            .where('createdAt', '>=', startTime)
+            .andWhereBetween('latitude', [minLat, maxLat])
+            .andWhereBetween('longitude', [minLng, maxLng])
+
+    const formattedRaids = await Promise.all(raids.map(async raid => {
+        const raidId = raid.id
+        const reports = await
+            knex('reports')
+                .where({ raidId })
+        const comments = await
+            knex('comments')
+                .where({ raidId })
+        raid.reports = reports
+        raid.comments = comments
+        return raid
+    }))
+
+    return formattedRaids
 }
 
 const newReport = async (request) => {

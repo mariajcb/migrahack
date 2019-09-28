@@ -9,6 +9,9 @@ exports.up = async function(knex) {
         table.timestamp('createdAt').defaultTo(knex.fn.now())
         table.uuid('reportId')
             .references('reports.id')
+        table.uuid('raidId')
+            .references('raids.id')
+            .notNullable()
     })
 };
 
