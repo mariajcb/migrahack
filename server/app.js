@@ -1,7 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
 
-const { getRaids, newReport } = require('./controllers/reports');
+const { getRaids, newReport, newComment } = require('./controllers/reports');
 
 const app = express();
 
@@ -33,6 +33,11 @@ app.post('/api/reports', async (req, res, next) => {
     }
     const raids = await getRaids(req.body)
     res.send(raids)
+})
+
+app.post('/api/comments/new', async (req, res, next) => {
+    await newComment(req.body)
+    res.status(200).send()
 })
 
 // error handler

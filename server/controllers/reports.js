@@ -29,6 +29,15 @@ const recalculateRaidCenter = async (raidId) => {
         })
 }
 
+const newComment = async (request) => {
+    const { comment, raidId, reportId } = request
+    await knex.insert({
+        comment,
+        raidId,
+        reportId,
+    }).into('comments')
+}
+
 const getRaids = async (request) => {
     const {
         latitude,
@@ -74,6 +83,7 @@ const newReport = async (request) => {
         longitude,
         datetime,
         isSighting,
+        comment
     } = request
     // Find a raid within the day of the current report and where the lat and long is within a 1 mile radius of the current lat long
     const timeOfReport = datetime || knex.fn.now()
@@ -102,13 +112,21 @@ const newReport = async (request) => {
         shouldRecalculateRaidCenter = true
     }
 
-    await knex('reports').insert({
+    const newReport = await knex('reports').insert({
         latitude,
         longitude,
         isSighting,
         raidId,
         startTime: timeOfReport
-    })
+    }, [ 'id' ])
+
+    if (comment) {
+        await newComment({
+            comment,
+            reportId: newReport[0].id,
+            raidId,
+        })
+    }
 
     if (shouldRecalculateRaidCenter) {
         await recalculateRaidCenter(raidId)
@@ -117,5 +135,6 @@ const newReport = async (request) => {
 
 module.exports =  {
     getRaids,
-    newReport
+    newReport,
+    newComment,
 }

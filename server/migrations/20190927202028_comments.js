@@ -4,8 +4,6 @@ exports.up = async function(knex) {
     return knex.schema.createTable(tableName, table => {
         table.uuid('id').unique().defaultTo(knex.raw('uuid_generate_v4()'))
         table.string('comment').notNullable()
-        table.float('latitude')
-        table.float('longitude')
         table.timestamp('createdAt').defaultTo(knex.fn.now())
         table.uuid('reportId')
             .references('reports.id')
