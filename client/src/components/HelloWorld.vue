@@ -23,6 +23,7 @@
 
 <script>
 import Mapbox from "mapbox-gl";
+import { api } from '../api'
 import {
   MglMap,
   MglAttributionControl,
@@ -47,10 +48,15 @@ export default {
       mapStyle: 'mapbox://styles/mapbox/light-v10',
       coordinates: [ -105.270546, 40.014984 ],
       zoom: 11,
+      raids: null
     };
   },
   created() {
     this.mapbox = Mapbox;
+  },
+  async mounted() {
+    const raids = await api.fetchReports()
+    this.raids = raids
   },
   methods: {
     // getCoordinates() {

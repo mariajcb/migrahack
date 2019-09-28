@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "setup:db": "knex migrate:rollback && knex migrate:latest && knex seed:run",
-    "start": "nodemon ./bin/www"
+    "start:dev": "nodemon ./bin/www",
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "geolib": "^3.0.4",
