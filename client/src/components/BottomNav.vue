@@ -8,7 +8,8 @@
     <v-btn
       height="80"
       value="recent"
-      class="mt-n2">
+      class="pb-4"
+      href="tel:+1-844-363-1423">
       <span>Call</span>
       <v-icon>mdi-phone</v-icon>
     </v-btn>
@@ -16,7 +17,10 @@
     <v-btn
       height="80"
       value="nearby"
-      class="mt-n2">
+      class="pb-4"
+      href="https://www.aclu.org/know-your-rights/immigrants-rights/"
+      target="_blank"
+      >
       <span>Help</span>
       <v-icon>mdi-bookmark-plus-outline</v-icon>
     </v-btn>
