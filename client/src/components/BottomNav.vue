@@ -2,7 +2,7 @@
   <v-bottom-navigation
       fixed
       v-model="bottomNav"
-      height="80"
+      height="100"
       :value="activeBtn"
       color="#3373C1"
     >
@@ -11,15 +11,7 @@
       value="recent"
       class="mt-n2">
       <span>Call</span>
-      <v-icon>mdi-history</v-icon>
-    </v-btn>
-
-    <v-btn
-      height="80"
-      value="report"
-      class="mt-n2">
-      <span>Report</span>
-      <v-icon>mdi-history</v-icon>
+      <v-icon>mdi-phone</v-icon>
     </v-btn>
 
     <v-btn
@@ -27,7 +19,7 @@
       value="nearby"
       class="mt-n2">
       <span>Help</span>
-      <v-icon>mdi-map-marker</v-icon>
+      <v-icon>mdi-bookmark-plus-outline</v-icon>
     </v-btn>
   </v-bottom-navigation>
 </template>

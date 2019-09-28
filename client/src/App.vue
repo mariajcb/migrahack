@@ -15,22 +15,24 @@
     </v-app-bar>
 
     <v-content>
-      <HelloWorld/>
+      <HelloWorld />
+      <ReportButton />
       <BottomNav />
-    </v-layout>
     </v-content>
   </v-app>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld';
+import ReportButton from './components/ReportButton';
 import BottomNav from './components/BottomNav';
 
 export default {
   name: 'App',
   components: {
     HelloWorld,
-    BottomNav
+    BottomNav,
+    ReportButton
   }
 };
 </script>
