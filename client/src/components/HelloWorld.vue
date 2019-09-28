@@ -3,7 +3,6 @@
     id="map"
     :accessToken="accessToken"
     :mapStyle.sync="mapStyle"
-
     :attributionControl="false"
     :center="coordinates"
     >
