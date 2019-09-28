@@ -26,8 +26,10 @@ def main():
     lat_key = pd.read_csv('centroids.csv')
     new = clean_for_db(arrests, lat_key)
 
-    csvfile = open('data/final_arrests.csv', 'r')
-    jsonfile = open('data/final_arrests2.json', 'w')
+    new.to_csv('final_arrests.csv', index=False)
+
+    csvfile = open('final_arrests.csv', 'r')
+    jsonfile = open('final_arrests3.json', 'w')
 
     fieldnames = ("startTime", "endTime", "numArrests", "latitude", "longitude", "locationName")
     reader = csv.DictReader(csvfile, fieldnames)

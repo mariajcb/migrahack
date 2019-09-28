@@ -27,7 +27,6 @@ def main():
 
     df = pd.DataFrame()
     for match in soup.find_all("div", class_="scroll", id="col2"):
-        table = match.find("table")
         table_body = match.find('tbody')
         rows = table_body.find_all('tr')
         for row in rows:
@@ -66,7 +65,6 @@ def main():
         df = df.assign(County=county)
         all_counties = all_counties.append(df)
 
-    # all_counties.loc[:, "County"] = all_counties.County.str.replace(", CO", "")
     all_counties.loc[:, "Arrests"] = all_counties.Arrests.str.replace(",", "").astype(int)
     all_counties.to_csv("month_year_co_counties_arrest.csv", index=False)
 
