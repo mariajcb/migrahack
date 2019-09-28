@@ -1,4 +1,5 @@
 <template>
+  <div id="app">
   <v-app>
     <v-app-bar app>
       <v-toolbar-title class="headline text-uppercase">
@@ -15,24 +16,16 @@
     </v-app-bar>
 
     <v-content>
-      <HelloWorld />
-      <ReportButton />
-      <BottomNav />
+      <router-view></router-view>
     </v-content>
   </v-app>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-import ReportButton from './components/ReportButton';
-import BottomNav from './components/BottomNav';
+
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld,
-    BottomNav,
-    ReportButton
-  }
+  name: 'app',
 };
 </script>
