@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "setup:db": "knex migrate:rollback && knex migrate:latest && knex seed:run",
+    "knex": "knex",
+    "heroku-postbuild": "knex migrate:rollback; knex migrate:latest; knex seed:run",
     "start:dev": "nodemon ./bin/www",
     "start": "node ./bin/www"
   },

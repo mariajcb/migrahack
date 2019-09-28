@@ -3,7 +3,6 @@
     id="map"
     :accessToken="accessToken"
     :mapStyle.sync="mapStyle"
-
     :attributionControl="false"
     :center="coordinates"
     >
@@ -55,7 +54,9 @@ export default {
     this.mapbox = Mapbox;
   },
   async mounted() {
+    console.log('got to mounted')
     const raids = await api.fetchReports()
+    console.log('raids', raids)
     this.raids = raids
   },
   methods: {

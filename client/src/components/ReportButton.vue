@@ -2,8 +2,10 @@
   <v-container fill-height>
     <v-layout align-center justify-center>
       <v-btn
+        color="#3373C1"
+        dark
+        class="bottom-button"
         @click.stop="dialog = true"
-        fixed
       >
         <span>Report Sighting</span>
       </v-btn>
@@ -50,12 +52,7 @@ export default {
 </script>
 
 <style media="screen">
-/* .outer {
-  position: relative;
-} */
-
-/* .align-bottom {
-  position: absolute;
-  bottom: 0;
-} */
+.bottom-button {
+  margin-top: 18rem;
+}
 </style>
