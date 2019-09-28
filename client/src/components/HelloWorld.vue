@@ -1,142 +1,94 @@
 <template>
-  <v-container>
-    <v-layout
-      text-center
-      wrap
+  <mgl-map
+    id="map"
+    :accessToken="accessToken"
+    :mapStyle.sync="mapStyle"
+
+    :attributionControl="false"
+    :center="coordinates"
     >
-      <v-flex xs12>
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        ></v-img>
-      </v-flex>
 
-      <v-flex mb-4>
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
-        </h1>
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a href="https://community.vuetifyjs.com" target="_blank">Discord Community</a>
-        </p>
-      </v-flex>
+    <MglAttributionControl />
+    <MglNavigationControl position="top-right" />
+    <MglGeolocateControl position="top-right" />
+      <MglMarker :coordinates="coordinates">
+        <MglPopup>
+          <v-card>
+            Hello, I'm popup!
+          </v-card>
+        </MglPopup>
+      </MglMarker>
 
-      <v-flex
-        mb-5
-        xs12
-      >
-        <h2 class="headline font-weight-bold mb-3">What's next?</h2>
+    <MglGeojsonLayer
+    :sourceId="geoJsonSource.id"
+    :source="geoJsonSource"
+    layerId="myLayer"
+    :layer="geoJsonlayer"
+    />
+  </mgl-map>
 
-        <v-layout justify-center>
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ next.text }}
-          </a>
-        </v-layout>
-      </v-flex>
-
-      <v-flex
-        xs12
-        mb-5
-      >
-        <h2 class="headline font-weight-bold mb-3">Important Links</h2>
-
-        <v-layout justify-center>
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ link.text }}
-          </a>
-        </v-layout>
-      </v-flex>
-
-      <v-flex
-        xs12
-        mb-5
-      >
-        <h2 class="headline font-weight-bold mb-3">Ecosystem</h2>
-
-        <v-layout justify-center>
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-layout>
-      </v-flex>
-    </v-layout>
-  </v-container>
 </template>
 
 <script>
+import Mapbox from "mapbox-gl";
+import {
+  MglMap,
+  MglAttributionControl,
+  MglNavigationControl,
+  MglGeolocateControl,
+  MglPopup,
+  MglMarker,
+  MglGeojsonLayer
+  } from "vue-mapbox";
+
 export default {
-  data: () => ({
-    ecosystem: [
-      {
-        text: 'vuetify-loader',
-        href: 'https://github.com/vuetifyjs/vuetify-loader',
+  components: {
+    MglMap,
+    MglNavigationControl,
+    MglGeolocateControl,
+    MglAttributionControl,
+    MglPopup,
+    MglMarker,
+    MglGeojsonLayer
+  },
+  data() {
+    return {
+      accessToken: 'pk.eyJ1IjoibWFyaWFqY2IiLCJhIjoiY2sxMnBmNDY5MDE1NDNibW90eXZyZTM4NyJ9.S80tecKtEt1gmWsGylPC1A',
+      mapStyle: 'mapbox://styles/mapbox/streets-v11',
+      coordinates: [-111.549668, 39.014],
+      zoom: 11,
+      geoJsonSource: {
+        "id": "historical-places",
+        "type": "circle",
+        "source": {
+          "type": "vector",
+          "url": "mapbox://mariajcb.d5hchqqa"
+        }
       },
-      {
-        text: 'github',
-        href: 'https://github.com/vuetifyjs/vuetify',
-      },
-      {
-        text: 'awesome-vuetify',
-        href: 'https://github.com/vuetifyjs/awesome-vuetify',
-      },
-    ],
-    importantLinks: [
-      {
-        text: 'Documentation',
-        href: 'https://vuetifyjs.com',
-      },
-      {
-        text: 'Chat',
-        href: 'https://community.vuetifyjs.com',
-      },
-      {
-        text: 'Made with Vuetify',
-        href: 'https://madewithvuejs.com/vuetify',
-      },
-      {
-        text: 'Twitter',
-        href: 'https://twitter.com/vuetifyjs',
-      },
-      {
-        text: 'Articles',
-        href: 'https://medium.com/vuetify',
-      },
-    ],
-    whatsNext: [
-      {
-        text: 'Explore components',
-        href: 'https://vuetifyjs.com/components/api-explorer',
-      },
-      {
-        text: 'Select a layout',
-        href: 'https://vuetifyjs.com/layout/pre-defined',
-      },
-      {
-        text: 'Frequently Asked Questions',
-        href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-      },
-    ],
-  }),
+      geoJsonLayer: {
+        'layerId': 'HPC_landmarks-1xzf0j'
+      }
+    };
+  },
+  created() {
+    this.mapbox = Mapbox;
+  },
+  methods: {
+
+  }
 };
 </script>
+
+<style media="screen">
+body {
+margin: 0;
+padding: 0;
+}
+
+#map {
+position: absolute;
+top: 0;
+bottom: 0;
+width: 100%;
+}
+</style>
