@@ -15,7 +15,7 @@
         max-width="290"
       >
         <v-card>
-          <v-form>
+          <v-form class="pa-4">
             <v-text-field
               label="Time"
               :append-icon="mdi-time"

@@ -22,6 +22,6 @@ export default {
 
 <style lang="css" scoped>
 .container {
-  width: 50%!important;
+  width: 60%!important;
 }
 </style>
