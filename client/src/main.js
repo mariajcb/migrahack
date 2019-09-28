@@ -1,14 +1,29 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
 
+const Home = { template: '<p>home page</p>' }
+const About = { template: '<p>about page</p>' }
+
+const routes = {
+  '/': Home,
+  '/about': About
+}
+
 new Vue({
-  router,
+  el: '#app',
+  data: {
+    currentRoute: window.location.pathname,
+  },
+  computed: {
+    ViewComponent () {
+      return routes[this.currentRoute]
+    }
+  },
   store,
   vuetify,
-  render: h => h(App)
-}).$mount('#app')
+  render (h) { return h(this.ViewComponent)}
+})
