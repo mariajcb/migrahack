@@ -45,7 +45,7 @@ const getRaids = async (request) => {
         daysBeforeToday,
         radiusInMiles,
     } = request
-
+    console.log(request)
     const startTime =
         daysBeforeToday ?
             moment(knex.fn.now()).subtract(daysBeforeToday, 'days').toISOString() :
@@ -75,6 +75,7 @@ const getRaids = async (request) => {
         raid.comments = comments
         return raid
     }))
+    console.log(formattedRaids)
 
     return formattedRaids
 }

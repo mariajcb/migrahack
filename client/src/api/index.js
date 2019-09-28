@@ -1,8 +1,7 @@
 import axios from 'axios'
-const apiEndpoint = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api': 'https://migrahack-server.herokuapp.com/api'
-const corsProxy = 'https://cors-anywhere.herokuapp.com/'
+const apiEndpoint = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api': 'https://cors-anywhere.herokuapp.com/https://migrahack-server.herokuapp.com/api'
 const createAPIRoute = (endpoint) => {
-    return `${corsProxy}${apiEndpoint}/${endpoint}`
+    return `${apiEndpoint}/${endpoint}`
 }
 export const api = {
     fetchReports: async (request) => {
@@ -11,7 +10,7 @@ export const api = {
             method: 'POST',
             url,
             data: request || {
-                latitude: 39.6778968 ,
+                latitude: 39.6778968,
                 longitude: -104.9640248,
                 radiusInMiles: 5
             }
