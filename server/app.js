@@ -1,6 +1,8 @@
 const express = require('express');
 const logger = require('morgan');
 
+const { getRaids, newReport } = require('./controllers/reports');
+const { createError } = require('./util/errors')
 const app = express();
 
 app.use(logger('dev'));
@@ -13,10 +15,17 @@ app.get('/api/fake', (req, res, next) => {
     }).send()
 })
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    next(createError(404));
-});
+
+app.post('/api/reports/new', async (req, res, next) => {
+    await newReport(req.body)
+})
+
+app.post('/api/reports', async (req, res, next) => {
+    if (!req.body) {
+        createError('Missing request body')
+    }
+    const raids = await getRaids(req.body)
+})
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -26,7 +35,7 @@ app.use(function(err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.send('err')
 });
 
 module.exports = app;
