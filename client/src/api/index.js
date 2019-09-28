@@ -3,7 +3,7 @@ const apiEndpoint = process.env.NODE_ENV === 'development' ? 'http://localhost:3
 const createAPIRoute = (endpoint) => {
     return `${apiEndpoint}/${endpoint}`
 }
-console.log(process.env.NODE_ENV)
+
 export const api = {
     fetchReports: async (request) => {
         const url = createAPIRoute('reports')
