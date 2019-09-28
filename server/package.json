@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "setup": "knex migrate:latest && knex seed:run",
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
