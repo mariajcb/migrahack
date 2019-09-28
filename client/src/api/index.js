@@ -11,8 +11,8 @@ export const api = {
             method: 'POST',
             url,
             data: request || {
-                latitude: 40.018850,
-                longitude: -105.264510,
+                latitude: 39.6778968 ,
+                longitude: -104.9640248,
                 radiusInMiles: 5
             }
         }).then(resp => {
