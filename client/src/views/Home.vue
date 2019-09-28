@@ -8,7 +8,7 @@ import Home from '../components/Home';
 export default {
   name: 'home',
   components: {
-    Home,
+    Home
   },
 };
 </script>

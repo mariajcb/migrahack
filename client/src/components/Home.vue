@@ -1,32 +1,23 @@
 <template>
   <div>
-  <mgl-map
-    id="map"
-    :accessToken="accessToken"
-    :mapStyle.sync="mapStyle"
-    :attributionControl="false"
-    :center="coordinates"
-    >
+    <mgl-map
+      id="map"
+      :accessToken="accessToken"
+      :mapStyle.sync="mapStyle"
+      :attributionControl="false"
+      :center="coordinates"
+      >
 
-    <MglAttributionControl />
-    <MglNavigationControl position="top-right" />
-    <MglGeolocateControl position="top-right" />
-      <MglMarker :coordinates="coordinates">
-        <MglPopup>
-          <v-card>
-            Raid
-            <br/>
-            {{ getCoordinates() }}
-            <br/>
-            {{ createdAt() }}
-            <br/>
-            {{ updatedAt() }}
-          </v-card>
-        </MglPopup>
-      </MglMarker>
-  </mgl-map>
-  <BottomNav />
-  <ReportButton />
+      <MglAttributionControl />
+      <MglNavigationControl position="top-right" />
+      <MglGeolocateControl position="top-right" />
+        <MglMarker :coordinates="coordinates">
+          {{ getCoordinates() }}
+        </MglMarker>
+    </mgl-map>
+    <DropdownButton />
+    <ReportButton />
+    <BottomNav />
   </div>
 </template>
 
@@ -36,6 +27,7 @@ import BottomNav from './BottomNav'
 import ReportButton from './ReportButton'
 import moment from "moment"
 import { api } from '../api'
+import DropdownButton from '../components/DropdownButton';
 
 import {
   MglMap,
@@ -43,7 +35,7 @@ import {
   MglNavigationControl,
   MglGeolocateControl,
   MglPopup,
-  MglMarker
+  MglMarker,
   } from "vue-mapbox";
 
 export default {
@@ -57,6 +49,7 @@ export default {
     MglMarker,
     BottomNav,
     ReportButton,
+    DropdownButton
   },
   data() {
     return {
