@@ -1,0 +1,15 @@
+const tableName = 'raids'
+exports.up = function(knex) {
+    return knex.schema.createTable(tableName, table => {
+        table.uuid('id').unique()
+        table.string('latitude')
+        table.string('longitude')
+        table.boolean('isVerified')
+        table.timestamp('createdAt').defaultTo(knex.fn.now())
+        table.timestamp('updatedAt').defaultTo(knex.fn.now())
+    })
+};
+
+exports.down = function(knex) {
+    return knex.schema.dropTable(tableName)
+};
