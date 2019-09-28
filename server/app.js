@@ -1,5 +1,6 @@
 const express = require('express');
 const logger = require('morgan');
+const cors = require('cors');
 
 const { getRaids, newReport, newComment } = require('./controllers/reports');
 
@@ -8,6 +9,7 @@ const app = express();
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
 app.get('/api/fake', (req, res, next) => {
     res.json({

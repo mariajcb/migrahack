@@ -7,6 +7,8 @@ exports.up = async function(knex) {
         table.float('longitude')
         table.boolean('hasAccumulatedReport').defaultTo(false)
         table.boolean('isVerified').defaultTo(false)
+        table.integer('sourceId')
+            .references('report_sources.id')
         table.timestamp('createdAt').defaultTo(knex.fn.now())
         table.timestamp('updatedAt').defaultTo(knex.fn.now())
     })

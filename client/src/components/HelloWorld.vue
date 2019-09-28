@@ -31,6 +31,7 @@
 
 <script>
 import Mapbox from "mapbox-gl";
+import { api } from '../api'
 import {
   MglMap,
   MglAttributionControl,
@@ -67,11 +68,16 @@ export default {
       },
       geoJsonLayer: {
         'layerId': 'HPC_landmarks-1xzf0j'
-      }
+      },
+      raids: null
     };
   },
   created() {
     this.mapbox = Mapbox;
+  },
+  async mounted() {
+    const raids = await api.fetchReports()
+    this.raids = raids
   },
   methods: {
 
