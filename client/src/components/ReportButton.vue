@@ -56,7 +56,7 @@ export default {
 }
 </script>
 
-<style media="screen">
+<style media="screen" scoped>
 .bottom-button {
   margin-top: 20rem;
 }

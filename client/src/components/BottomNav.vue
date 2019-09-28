@@ -32,7 +32,4 @@ export default {
 </script>
 
 <style lang="css" scoped>
-/* button {
-  padding-top: 0.75rem!important;
-} */
 </style>

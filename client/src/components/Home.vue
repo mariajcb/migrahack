@@ -1,4 +1,5 @@
 <template>
+  <div>
   <mgl-map
     id="map"
     :accessToken="accessToken"
@@ -24,12 +25,18 @@
         </MglPopup>
       </MglMarker>
   </mgl-map>
+  <BottomNav />
+  <ReportButton />
+  </div>
 </template>
 
 <script>
 import Mapbox from "mapbox-gl";
-import moment from "moment";
+import BottomNav from './BottomNav'
+import ReportButton from './ReportButton'
+import moment from "moment"
 import { api } from '../api'
+
 import {
   MglMap,
   MglAttributionControl,
@@ -40,13 +47,16 @@ import {
   } from "vue-mapbox";
 
 export default {
+  name: 'home',
   components: {
     MglMap,
     MglNavigationControl,
     MglGeolocateControl,
     MglAttributionControl,
     MglPopup,
-    MglMarker
+    MglMarker,
+    BottomNav,
+    ReportButton,
   },
   data() {
     return {
@@ -54,7 +64,7 @@ export default {
       mapStyle: 'mapbox://styles/mapbox/light-v10',
       raids: null,
       coordinates: [],
-      zoom: 11,
+      zoom: 3,
     };
   },
   created() {
@@ -81,6 +91,7 @@ export default {
   },
 };
 </script>
+
 
 <style media="screen">
 body {
