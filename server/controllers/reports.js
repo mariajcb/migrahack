@@ -1,16 +1,17 @@
 const geolib = require('geolib')
 const moment = require('moment')
 const knex = require('../knex')
-const { convertMilesToMeters } = require('../util/geocoding')
+const { getBoundsOfDistance } = require('../util/geocoding')
 
 const createRaid = async (raid) => {
     const { latitude, longitude } = raid
-    return knex('raids')
-        .returning('id')
+    const newRaid = await knex
         .insert({
         latitude,
         longitude
-    })[0]
+    }, ['id']).into('raids')
+
+    return newRaid[0]
 }
 
 const recalculateRaidCenter = async (raidId) => {
@@ -45,14 +46,14 @@ const newReport = async (request) => {
         isSighting,
     } = request
     // Find a raid within the day of the current report and where the lat and long is within a 1 mile radius of the current lat long
+    const timeOfReport = datetime || knex.fn.now()
     // TODO: This most likely should be within the same day, not 24 hrs
-    const oneDayBeforeCurrentReport = moment(datetime).subtract(1, 'days')
+    const oneDayBeforeCurrentReport = moment(timeOfReport).subtract(1, 'days').toISOString()
 
-    const oneMileInMeters = convertMilesToMeters(1)
-    const { minLat, maxLat, minLng, maxLng } = geolib.getBoundsOfDistance({
+    const { minLat, maxLat, minLng, maxLng } = getBoundsOfDistance({
         latitude,
         longitude,
-    }, oneMileInMeters)
+    }, 1)
 
     let raidId = ''
     let shouldRecalculateRaidCenter = false
@@ -64,20 +65,20 @@ const newReport = async (request) => {
             .first()
 
     if (!existingRaid) {
-        raidId = await createRaid(request)
+        const newRaid = await createRaid(request)
+        raidId = newRaid.id
     } else {
         raidId = existingRaid.id
         shouldRecalculateRaidCenter = true
     }
 
-    await knex('reports').insert(Object.assign({
+    await knex('reports').insert({
         latitude,
         longitude,
         isSighting,
         raidId,
-    }, datetime ? {
-        startTime: datetime
-    } : {}))
+        startTime: timeOfReport
+    })
 
     if (shouldRecalculateRaidCenter) {
         await recalculateRaidCenter(raidId)

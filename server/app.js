@@ -2,7 +2,7 @@ const express = require('express');
 const logger = require('morgan');
 
 const { getRaids, newReport } = require('./controllers/reports');
-const { createError } = require('./util/errors')
+
 const app = express();
 
 app.use(logger('dev'));
@@ -17,12 +17,19 @@ app.get('/api/fake', (req, res, next) => {
 
 
 app.post('/api/reports/new', async (req, res, next) => {
-    await newReport(req.body)
+    try {
+        await newReport(req.body)
+        res.status(200).send()
+    } catch (err) {
+        console.log(err)
+        res.status(500).send('Could not create new report')
+    }
+
 })
 
 app.post('/api/reports', async (req, res, next) => {
     if (!req.body) {
-        createError('Missing request body')
+        res.status(500).send('Missing request body')
     }
     const raids = await getRaids(req.body)
 })
