@@ -5,6 +5,7 @@ exports.up = async function(knex) {
         table.uuid('id').unique().defaultTo(knex.raw('uuid_generate_v4()'))
         table.float('latitude')
         table.float('longitude')
+        table.boolean('hasAccumulatedReport').defaultTo(false)
         table.boolean('isVerified').defaultTo(false)
         table.timestamp('createdAt').defaultTo(knex.fn.now())
         table.timestamp('updatedAt').defaultTo(knex.fn.now())

@@ -47,8 +47,9 @@ const getRaids = async (request) => {
     } = request
 
     const startTime =
-        moment(knex.fn.now()).subtract(daysBeforeToday, 'days').toISOString() ||
-        moment(knex.fn.now()).subtract(1, 'months').toISOString() // default to one month
+        daysBeforeToday ?
+            moment(knex.fn.now()).subtract(daysBeforeToday, 'days').toISOString() :
+            moment(knex.fn.now()).subtract(1, 'months').toISOString() // default to one month
 
     const { minLat, maxLat, minLng, maxLng } = getBoundsOfDistance({
         latitude,
@@ -60,6 +61,7 @@ const getRaids = async (request) => {
             .where('createdAt', '>=', startTime)
             .andWhereBetween('latitude', [minLat, maxLat])
             .andWhereBetween('longitude', [minLng, maxLng])
+
 
     const formattedRaids = await Promise.all(raids.map(async raid => {
         const raidId = raid.id
