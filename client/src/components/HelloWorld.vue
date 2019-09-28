@@ -18,15 +18,7 @@
           </v-card>
         </MglPopup>
       </MglMarker>
-
-    <MglGeojsonLayer
-    :sourceId="geoJsonSource.id"
-    :source="geoJsonSource"
-    layerId="myLayer"
-    :layer="geoJsonlayer"
-    />
   </mgl-map>
-
 </template>
 
 <script>
@@ -37,8 +29,7 @@ import {
   MglNavigationControl,
   MglGeolocateControl,
   MglPopup,
-  MglMarker,
-  MglGeojsonLayer
+  MglMarker
   } from "vue-mapbox";
 
 export default {
@@ -48,33 +39,25 @@ export default {
     MglGeolocateControl,
     MglAttributionControl,
     MglPopup,
-    MglMarker,
-    MglGeojsonLayer
+    MglMarker
   },
   data() {
     return {
       accessToken: 'pk.eyJ1IjoibWFyaWFqY2IiLCJhIjoiY2sxMnBmNDY5MDE1NDNibW90eXZyZTM4NyJ9.S80tecKtEt1gmWsGylPC1A',
-      mapStyle: 'mapbox://styles/mapbox/streets-v11',
-      coordinates: [-111.549668, 39.014],
+      mapStyle: 'mapbox://styles/mapbox/light-v10',
+      coordinates: [ -105.270546, 40.014984 ],
       zoom: 11,
-      geoJsonSource: {
-        "id": "historical-places",
-        "type": "circle",
-        "source": {
-          "type": "vector",
-          "url": "mapbox://mariajcb.d5hchqqa"
-        }
-      },
-      geoJsonLayer: {
-        'layerId': 'HPC_landmarks-1xzf0j'
-      }
     };
   },
   created() {
     this.mapbox = Mapbox;
   },
   methods: {
-
+    // getCoordinates() {
+    //   const lat = `${API_URL}/api/latitude/`
+    //   const long = `${API_URL}/api/longitude/`
+    //   return axios.get(lat, long).then(response => response.data)
+    // }
   }
 };
 </script>

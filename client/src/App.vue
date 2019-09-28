@@ -2,8 +2,7 @@
   <v-app>
     <v-app-bar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
+        <span>BOOP</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
@@ -17,20 +16,21 @@
 
     <v-content>
       <HelloWorld/>
+      <BottomNav />
+    </v-layout>
     </v-content>
   </v-app>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld';
+import BottomNav from './components/BottomNav';
 
 export default {
   name: 'App',
   components: {
     HelloWorld,
-  },
-  data: () => ({
-    //
-  }),
+    BottomNav
+  }
 };
 </script>
