@@ -2,8 +2,7 @@
   <v-bottom-navigation
       fixed
       v-model="bottomNav"
-      height="100"
-      :value="activeBtn"
+      height="80"
       color="#3373C1"
     >
     <v-btn

@@ -13,7 +13,13 @@
       <MglMarker :coordinates="coordinates">
         <MglPopup>
           <v-card>
-            Hello, I'm popup!
+            Raid
+            <br/>
+            {{ getCoordinates() }}
+            <br/>
+            {{ createdAt() }}
+            <br/>
+            {{ updatedAt() }}
           </v-card>
         </MglPopup>
       </MglMarker>
@@ -22,6 +28,7 @@
 
 <script>
 import Mapbox from "mapbox-gl";
+import moment from "moment";
 import { api } from '../api'
 import {
   MglMap,
@@ -45,9 +52,9 @@ export default {
     return {
       accessToken: 'pk.eyJ1IjoibWFyaWFqY2IiLCJhIjoiY2sxMnBmNDY5MDE1NDNibW90eXZyZTM4NyJ9.S80tecKtEt1gmWsGylPC1A',
       mapStyle: 'mapbox://styles/mapbox/light-v10',
-      coordinates: [ -105.270546, 40.014984 ],
+      raids: null,
+      coordinates: [],
       zoom: 11,
-      raids: null
     };
   },
   created() {
@@ -60,12 +67,18 @@ export default {
     this.raids = raids
   },
   methods: {
-    // getCoordinates() {
-    //   const lat = `${API_URL}/api/latitude/`
-    //   const long = `${API_URL}/api/longitude/`
-    //   return axios.get(lat, long).then(response => response.data)
-    // }
-  }
+    createdAt() {
+      return moment(this.raids[0].createdAt).format('MMMM Do YYYY, h:mm a')
+    },
+    updatedAt() {
+      return moment(this.raids[0].updatedAt).format('MMMM Do YYYY, h:mm a')
+    },
+    getCoordinates () {
+      return this.coordinates =
+          [ this.raids[0].longitude,
+          this.raids[0].latitude ]
+    }
+  },
 };
 </script>
 

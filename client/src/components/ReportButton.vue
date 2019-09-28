@@ -48,11 +48,16 @@
 
 <script>
 export default {
+  data () {
+    return {
+      dialog: false,
+    }
+  },
 }
 </script>
 
 <style media="screen">
 .bottom-button {
-  margin-top: 18rem;
+  margin-top: 20rem;
 }
 </style>
